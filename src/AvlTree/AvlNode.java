@@ -1,5 +1,6 @@
 package AvlTree;
 
+import java.awt.Color;
 import java.awt.Point;
 
 /**
@@ -8,12 +9,14 @@ import java.awt.Point;
  * @author Gnylorybov Evgeniy
  */
 public class AvlNode {
-    public AvlNode left;
-    public AvlNode right;
-    public AvlNode parent;
-    public int key;
-    public int balance;
-    public Point point;
+    protected AvlNode left;
+    protected AvlNode right;
+    protected AvlNode parent;
+    protected int key;
+    protected int balance;
+    protected Point point;
+    protected boolean isNew = false;
+    protected Color nodeColor;
     
     public AvlNode() {}
 

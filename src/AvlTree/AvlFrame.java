@@ -229,6 +229,7 @@ public class AvlFrame extends javax.swing.JFrame {
      */
     private static void reDrawTree(AvlNode node) {
         if(node == null) {return;}
+        if(node.nodeColor == Color.GREEN) {node.isNew = true;}
         drawSquare(node);
         if(node.left != null) {
             drawLine(node, node.left);
@@ -257,7 +258,15 @@ public class AvlFrame extends javax.swing.JFrame {
             node.point.y - SIDE_EXTERNAL_SQUARE/2,
             SIDE_EXTERNAL_SQUARE,
             SIDE_EXTERNAL_SQUARE);
-        gr.setColor(Color.RED);
+        if(node.isNew == true) {
+            gr.setColor(Color.GREEN);
+            node.isNew = false;
+            node.nodeColor = Color.GREEN;
+        }
+        else {
+            gr.setColor(Color.RED);
+            node.nodeColor = Color.RED;
+        }
         gr.fillRect(
             node.point.x - SIDE_SQUARE/2,
             node.point.y - SIDE_SQUARE/2,
@@ -322,7 +331,7 @@ public class AvlFrame extends javax.swing.JFrame {
      *          now connects nodes
      * 
      */
-    public static void clearLine(AvlNode nodeFirst, AvlNode nodeSecond) {
+    public static void cleanLine(AvlNode nodeFirst, AvlNode nodeSecond) {
         Graphics2D gr = (Graphics2D)getFrame().getGraphics();
         gr.setColor(Color.WHITE);
         gr.setStroke(new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.0f));

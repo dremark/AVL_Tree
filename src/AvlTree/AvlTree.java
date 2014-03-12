@@ -1,5 +1,6 @@
 package AvlTree;
 
+import java.awt.Color;
 import java.awt.Point;
 
 /**
@@ -32,6 +33,7 @@ public class AvlTree {
      */
     public void add(int key) {
         AvlNode node = new AvlNode(key);
+        node.isNew = true;
         addToAvlTree(root, node);
         extendTree(root);
     }
@@ -54,7 +56,7 @@ public class AvlTree {
                 if(node != root) {
                     if(node.parent.right == node) {
                         AvlFrame.cleanSquare(node);
-                        AvlFrame.clearLine(node.parent, node);
+                        AvlFrame.cleanLine(node.parent, node);
                         node.point = new Point(
                                 node.point.x + BIG_STEP_BY_X,
                                 node.point.y);
@@ -64,7 +66,7 @@ public class AvlTree {
                     }
                     if(node.parent.left == node) {
                         AvlFrame.cleanSquare(node);
-                        AvlFrame.clearLine(node.parent, node);
+                        AvlFrame.cleanLine(node.parent, node);
                         node.point = new Point(
                                 node.point.x - BIG_STEP_BY_X,
                                 node.point.y);
@@ -109,13 +111,14 @@ public class AvlTree {
      */
     private void cleanTree(AvlNode node) {
         if(node == null) {return;}
+        if(node.nodeColor == Color.GREEN) {node.isNew = true;}
         if(node.left != null) {
             AvlFrame.cleanSquare(node.left);
-            AvlFrame.clearLine(node, node.left);
+            AvlFrame.cleanLine(node, node.left);
         }
         if(node.right != null) {
             AvlFrame.cleanSquare(node.right);
-            AvlFrame.clearLine(node, node.right);
+            AvlFrame.cleanLine(node, node.right);
         }
         cleanTree(node.left);
         cleanTree(node.right);
@@ -226,8 +229,8 @@ public class AvlTree {
         else {
             root = current;
             AvlFrame.cleanSquare(current);
-            if(current.left != null) {AvlFrame.clearLine(current, current.left);}
-            if(current.right != null) {AvlFrame.clearLine(current, current.right);}
+            if(current.left != null) {AvlFrame.cleanLine(current, current.left);}
+            if(current.right != null) {AvlFrame.cleanLine(current, current.right);}
             current.point = START_COORDINATES;
             if(current.left != null) {
                 AvlFrame.drawLine(current, current.left);
@@ -332,7 +335,7 @@ public class AvlTree {
         if(nodeTmp1.parent == null) {
             AvlFrame.cleanSquare(nodeTmp1);
             AvlFrame.cleanSquare(nodeTmp2);
-            AvlFrame.clearLine(nodeTmp1, nodeTmp2);
+            AvlFrame.cleanLine(nodeTmp1, nodeTmp2);
             root = nodeTmp2;
             nodeTmp2.point = START_COORDINATES;
             AvlFrame.drawSquare(nodeTmp2);
@@ -341,12 +344,12 @@ public class AvlTree {
             if(nodeTmp1 == nodeTmp1.parent.left) {
                 if(nodeTmp2 == null) {
                     AvlFrame.cleanSquare(nodeTmp1);
-                    AvlFrame.clearLine(nodeTmp1, nodeTmp1.parent);
+                    AvlFrame.cleanLine(nodeTmp1, nodeTmp1.parent);
                     AvlFrame.drawSquare(nodeTmp1.parent);
                 }
                 else {
-                    AvlFrame.clearLine(nodeTmp1.parent, nodeTmp1);
-                    AvlFrame.clearLine(nodeTmp1, nodeTmp2);
+                    AvlFrame.cleanLine(nodeTmp1.parent, nodeTmp1);
+                    AvlFrame.cleanLine(nodeTmp1, nodeTmp2);
                     AvlFrame.cleanSquare(nodeTmp1);
                     AvlFrame.cleanSquare(nodeTmp2);
                     nodeTmp2.point = new Point(
@@ -361,12 +364,12 @@ public class AvlTree {
             else {
                 if(nodeTmp2 == null) {
                     AvlFrame.cleanSquare(nodeTmp1);
-                    AvlFrame.clearLine(nodeTmp1, nodeTmp1.parent);
+                    AvlFrame.cleanLine(nodeTmp1, nodeTmp1.parent);
                     AvlFrame.drawSquare(nodeTmp1.parent);
                 }
                 else {
-                    AvlFrame.clearLine(nodeTmp1.parent, nodeTmp1);
-                    AvlFrame.clearLine(nodeTmp1, nodeTmp2);
+                    AvlFrame.cleanLine(nodeTmp1.parent, nodeTmp1);
+                    AvlFrame.cleanLine(nodeTmp1, nodeTmp2);
                     AvlFrame.cleanSquare(nodeTmp1);
                     AvlFrame.cleanSquare(nodeTmp2);
                     nodeTmp2.point = new Point(
@@ -417,28 +420,28 @@ public class AvlTree {
       private AvlNode rotateLeft(AvlNode current) {
         AvlFrame.cleanSquare(current);
         AvlFrame.cleanSquare(current.right);
-        AvlFrame.clearLine(current, current.right);
+        AvlFrame.cleanLine(current, current.right);
         if(current.right.right != null) {
             AvlFrame.cleanSquare(current.right.right);
-            AvlFrame.clearLine(current.right, current.right.right);
+            AvlFrame.cleanLine(current.right, current.right.right);
             if(current.right.right.right != null) {
-                AvlFrame.clearLine(current.right.right, current.right.right.right);
+                AvlFrame.cleanLine(current.right.right, current.right.right.right);
             }
             if(current.right.right.left != null) {
-                AvlFrame.clearLine(current.right.right, current.right.right.left);
+                AvlFrame.cleanLine(current.right.right, current.right.right.left);
             }
         }
         AvlNode result = current.right;
         result.parent = current.parent;
         current.right = result.left;
         if(result.left != null) {
-            AvlFrame.clearLine(result, result.left);
+            AvlFrame.cleanLine(result, result.left);
             AvlFrame.cleanSquare(result.left);
             if(result.left.left != null) {
-                AvlFrame.clearLine(result.left.left, result.left);
+                AvlFrame.cleanLine(result.left.left, result.left);
             }
             if(result.left.right != null) {
-                AvlFrame.clearLine(result.left.right, result.left);
+                AvlFrame.cleanLine(result.left.right, result.left);
             }
         }
         current.point = new Point(
@@ -480,29 +483,29 @@ public class AvlTree {
     private AvlNode rotateRight(AvlNode current) {
         AvlFrame.cleanSquare(current);
         AvlFrame.cleanSquare(current.left);
-        AvlFrame.clearLine(current, current.left);
+        AvlFrame.cleanLine(current, current.left);
         if(current.left.left != null) {
             AvlFrame.cleanSquare(current.left.left);
-            AvlFrame.clearLine(current.left, current.left.left);
+            AvlFrame.cleanLine(current.left, current.left.left);
             if(current.left.left.left != null) {
                 AvlFrame.cleanSquare(current.left.left.left);
-                AvlFrame.clearLine(current.left.left, current.left.left.left);
+                AvlFrame.cleanLine(current.left.left, current.left.left.left);
             }
             if(current.left.left.right != null) {
                 AvlFrame.cleanSquare(current.left.left.right);
-                AvlFrame.clearLine(current.left.left, current.left.left.right);
+                AvlFrame.cleanLine(current.left.left, current.left.left.right);
             }
         }
         if(current.left.right != null) {
             AvlFrame.cleanSquare(current.left.right);
-            AvlFrame.clearLine(current.left, current.left.right);
+            AvlFrame.cleanLine(current.left, current.left.right);
             if(current.left.right.left != null) {
                 AvlFrame.cleanSquare(current.left.right.left);
-                AvlFrame.clearLine(current.left.right, current.left.right.left);
+                AvlFrame.cleanLine(current.left.right, current.left.right.left);
             }
             if(current.left.right.right != null) {
                 AvlFrame.cleanSquare(current.left.right.right);
-                AvlFrame.clearLine(current.left.right, current.left.right.right);
+                AvlFrame.cleanLine(current.left.right, current.left.right.right);
             }
         }
         AvlNode result = current.left;
