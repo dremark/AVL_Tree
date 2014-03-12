@@ -1,7 +1,7 @@
 package AvlTree;
 
-import java.awt.Color;
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  * This class is responsible for the mechanics of AVL tree.
@@ -15,12 +15,15 @@ public class AvlTree {
     private static final int STEP_BY_X = 40;
     private static final int STEP_BY_Y = 80;
     private static final int BIG_STEP_BY_X = 90;
+    private static ArrayList<AvlNode> list = new ArrayList<AvlNode>();
     
     /**This string contains a message about successful or not successful,
      * adding or removing a node.*/
     private static String msg = "";
   
     protected static String getMsg() {return msg;}
+    
+    protected static ArrayList<AvlNode> getList() {return list;}
     
     protected AvlNode getRoot() {return root;}
     
@@ -33,7 +36,7 @@ public class AvlTree {
      */
     public void add(int key) {
         AvlNode node = new AvlNode(key);
-        node.isNew = true;
+        list.add(node);
         addToAvlTree(root, node);
         extendTree(root);
     }
@@ -111,7 +114,6 @@ public class AvlTree {
      */
     private void cleanTree(AvlNode node) {
         if(node == null) {return;}
-        if(node.nodeColor == Color.GREEN) {node.isNew = true;}
         if(node.left != null) {
             AvlFrame.cleanSquare(node.left);
             AvlFrame.cleanLine(node, node.left);
@@ -167,7 +169,10 @@ public class AvlTree {
             AvlFrame.drawSquare(nodeNew);
         }
         else {
-            if(currentRoot.key == nodeNew.key) {msg = " Node already exist.";}
+            if(currentRoot.key == nodeNew.key) {
+                msg = " Node already exist.";
+                list.remove(list.size()-1);
+            }
             else {
                 msg = " " + nodeNew.key + " Added";
                 if(nodeNew.key < currentRoot.key) {
@@ -297,6 +302,7 @@ public class AvlTree {
         if(node == null) {msg = " Node not exist.";}
         else {
             msg = " " + key + " Removed";
+            list.remove(node);
             if(node.key == key) {removeFoundNode(node);}
             else {
                 if(node.key > key)  {removeAvlNode(node.left,key);}

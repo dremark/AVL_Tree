@@ -229,7 +229,7 @@ public class AvlFrame extends javax.swing.JFrame {
      */
     private static void reDrawTree(AvlNode node) {
         if(node == null) {return;}
-        if(node.nodeColor == Color.GREEN) {node.isNew = true;}
+//        if(node.nodeColor == Color.GREEN) {node.isNew = true;}
         drawSquare(node);
         if(node.left != null) {
             drawLine(node, node.left);
@@ -258,15 +258,8 @@ public class AvlFrame extends javax.swing.JFrame {
             node.point.y - SIDE_EXTERNAL_SQUARE/2,
             SIDE_EXTERNAL_SQUARE,
             SIDE_EXTERNAL_SQUARE);
-        if(node.isNew == true) {
-            gr.setColor(Color.GREEN);
-            node.isNew = false;
-            node.nodeColor = Color.GREEN;
-        }
-        else {
-            gr.setColor(Color.RED);
-            node.nodeColor = Color.RED;
-        }
+        if(AvlTree.getList().indexOf(node) == AvlTree.getList().size()-1) {gr.setColor(Color.GREEN);}
+        else {gr.setColor(Color.RED);}
         gr.fillRect(
             node.point.x - SIDE_SQUARE/2,
             node.point.y - SIDE_SQUARE/2,

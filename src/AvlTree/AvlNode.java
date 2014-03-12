@@ -1,6 +1,5 @@
 package AvlTree;
 
-import java.awt.Color;
 import java.awt.Point;
 
 /**
@@ -15,8 +14,6 @@ public class AvlNode {
     protected int key;
     protected int balance;
     protected Point point;
-    protected boolean isNew = false;
-    protected Color nodeColor;
     
     public AvlNode() {}
 
@@ -25,6 +22,14 @@ public class AvlNode {
         right=null;
         parent=null;
         this.key=key;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof AvlNode == false) {return false;}
+        AvlNode tmp = (AvlNode)obj;
+        if(this.key == tmp.key) {return true;}
+        return false;
     }
     
     @Override
