@@ -203,7 +203,7 @@ public class AvlFrame extends javax.swing.JFrame {
 
     private void formWindowDeiconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeiconified
         outputMsg.setText(" Auto redrawing not work, please press ReDrawTree.");
-        reDrawTree(tree.getRoot());
+        /*reDrawTree(tree.getRoot());*/ //TODO: not work
     }//GEN-LAST:event_formWindowDeiconified
 
     /**Button is responsible for redrawing tree.*/
